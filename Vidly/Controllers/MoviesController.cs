@@ -4,30 +4,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ActionResult Index()
         {
-            if (!pageIndex.HasValue)
+            var movies = new List<Movie>
             {
-                pageIndex = 1;
-            }
+                new Movie {Id = 0, Name = "Shrek"},
+                new Movie {Id = 1, Name = "Wall-e"},
+            };
 
-            if (String.IsNullOrWhiteSpace(sortBy))
+            var viewModel = new MoviesViewModel
             {
-                sortBy = "Name";
-            }
+                Movies = movies
+            };
 
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
-        }
-
-        public ActionResult ByReleasedDate(int year, int month)
-        {
-
-            return Content(year + "/" + month);
+            return View(viewModel);
         }
     }
 }
