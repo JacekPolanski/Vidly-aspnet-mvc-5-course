@@ -3,7 +3,7 @@ namespace Vidly.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialModel : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,48 @@ namespace Vidly.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 255),
+                        Birthdate = c.DateTime(),
+                        IsSubscribedToNewsletter = c.Boolean(nullable: false),
+                        MemebershipTypeId = c.Byte(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MembershipTypes", t => t.MemebershipTypeId, cascadeDelete: true)
+                .Index(t => t.MemebershipTypeId);
+            
+            CreateTable(
+                "dbo.MembershipTypes",
+                c => new
+                    {
+                        Id = c.Byte(nullable: false),
+                        SignUpFee = c.Short(nullable: false),
+                        DurationInMonths = c.Byte(nullable: false),
+                        DiscountRate = c.Byte(nullable: false),
                         Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Movies",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        ReleaseDate = c.DateTime(nullable: false),
+                        DateAdded = c.DateTime(nullable: false),
+                        NumberInStock = c.Int(nullable: false),
+                        Genres_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Genres", t => t.Genres_Id, cascadeDelete: true)
+                .Index(t => t.Genres_Id);
+            
+            CreateTable(
+                "dbo.Genres",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 255),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -92,17 +133,24 @@ namespace Vidly.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Movies", "Genres_Id", "dbo.Genres");
+            DropForeignKey("dbo.Customers", "MemebershipTypeId", "dbo.MembershipTypes");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Movies", new[] { "Genres_Id" });
+            DropIndex("dbo.Customers", new[] { "MemebershipTypeId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Genres");
+            DropTable("dbo.Movies");
+            DropTable("dbo.MembershipTypes");
             DropTable("dbo.Customers");
         }
     }
