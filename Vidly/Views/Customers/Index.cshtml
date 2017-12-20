@@ -1,61 +1,66 @@
-﻿@model Vidly.ViewModels.CustomersViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Customers</h2>
 
-@if (Model.Customers.Count == 0)
-{
-    <text>We dont't have any customers yet.</text>
-}
-else
-{
-    <table id="customers" class="table">
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Membership Types</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model.Customers)
-            {
-                <tr>
-                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
-                    <td>@customer.MemebershipType.Name</td>
-                    <td>
-                        <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<table id="customers" class="table">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Membership Types</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $("#customers").DataTable();
+            $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button data-customer-id='" + data + "' class='btn-link js-delete'>Delete</button>";
+                        }
+                    }
+                ]
+            });
 
-            $("#customers").on("click", ".js-delete", function () {
-                var button = $(this);
+            $("#customers").on("click",
+                ".js-delete",
+                function () {
+                    var button = $(this);
 
-                bootbox.confirm("Are you sure you wont to delete this customer?", function(result) {
-                    if (result) {
-                        $.ajax({
-                            url: "/api/customers/" + button.data("customer-id"),
-                            method: "DELETE",
-                            success: function () {
-                                button.parents("tr").remove();
+                    bootbox.confirm("Are you sure you wont to delete this customer?",
+                        function (result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/customers/" + button.data("customer-id"),
+                                    method: "DELETE",
+                                    success: function () {
+                                        button.parents("tr").remove();
+                                    }
+                                });
                             }
                         });
-                    }
                 });
-            });
         });
     </script>
 }
