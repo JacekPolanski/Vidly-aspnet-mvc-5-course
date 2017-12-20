@@ -17,11 +17,11 @@ namespace Vidly.Migrations
             Sql("UPDATE MembershipTypes SET Name = 'Quarterly' WHERE Id = 3");
             Sql("UPDATE MembershipTypes SET Name = 'Annual' WHERE Id = 4");
 
-            Sql("INSERT INTO Genre (Name) VALUES ('Action')");
-            Sql("INSERT INTO Genre (Name) VALUES ('Thriller')");
-            Sql("INSERT INTO Genre (Name) VALUES ('Family')");
-            Sql("INSERT INTO Genre (Name) VALUES ('Romance')");
-            Sql("INSERT INTO Genre (Name) VALUES ('Comedy')");
+            Sql("INSERT INTO Genres (Name) VALUES ('Action')");
+            Sql("INSERT INTO Genres (Name) VALUES ('Thriller')");
+            Sql("INSERT INTO Genres (Name) VALUES ('Family')");
+            Sql("INSERT INTO Genres (Name) VALUES ('Romance')");
+            Sql("INSERT INTO Genres (Name) VALUES ('Comedy')");
         }
         
         public override void Down()

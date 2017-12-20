@@ -34,7 +34,7 @@ namespace Vidly.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Genre",
+                "dbo.Genres",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -43,7 +43,7 @@ namespace Vidly.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Movie",
+                "dbo.Movies",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -54,7 +54,7 @@ namespace Vidly.Migrations
                         NumberInStock = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Genre", t => t.GenresId, cascadeDelete: true)
+                .ForeignKey("dbo.Genres", t => t.GenresId, cascadeDelete: true)
                 .Index(t => t.GenresId);
             
             CreateTable(
