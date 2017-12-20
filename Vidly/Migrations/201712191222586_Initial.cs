@@ -15,11 +15,11 @@ namespace Vidly.Migrations
                         Name = c.String(nullable: false, maxLength: 255),
                         Birthdate = c.DateTime(),
                         IsSubscribedToNewsletter = c.Boolean(nullable: false),
-                        MemebershipTypeId = c.Byte(nullable: false),
+                        MembershipTypeId = c.Byte(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MembershipTypes", t => t.MemebershipTypeId, cascadeDelete: true)
-                .Index(t => t.MemebershipTypeId);
+                .ForeignKey("dbo.MembershipTypes", t => t.MembershipTypeId, cascadeDelete: true)
+                .Index(t => t.MembershipTypeId);
             
             CreateTable(
                 "dbo.MembershipTypes",
@@ -134,7 +134,7 @@ namespace Vidly.Migrations
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Movie", "GenreId", "dbo.Genre");
-            DropForeignKey("dbo.Customers", "MemebershipTypeId", "dbo.MembershipTypes");
+            DropForeignKey("dbo.Customers", "MembershipTypeId", "dbo.MembershipTypes");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -142,7 +142,7 @@ namespace Vidly.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Movie", new[] { "GenreId" });
-            DropIndex("dbo.Customers", new[] { "MemebershipTypeId" });
+            DropIndex("dbo.Customers", new[] { "MembershipTypeId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");

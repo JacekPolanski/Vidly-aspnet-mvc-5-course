@@ -211,6 +211,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Dtos\CustomerDto.cs" />
+    <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -234,6 +235,10 @@
     <Compile Include="Migrations\201712191616228_Fix2.cs" />
     <Compile Include="Migrations\201712191616228_Fix2.Designer.cs">
       <DependentUpon>201712191616228_Fix2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712201837517_FixPropName.cs" />
+    <Compile Include="Migrations\201712201837517_FixPropName.Designer.cs">
+      <DependentUpon>201712201837517_FixPropName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -524,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712191616228_Fix2.resx">
       <DependentUpon>201712191616228_Fix2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712201837517_FixPropName.resx">
+      <DependentUpon>201712201837517_FixPropName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
